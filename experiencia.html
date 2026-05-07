@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Experiencia del Colaborador · 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Inter:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#050B14;--surface:#091220;--surface2:#0D1A2E;
+  --accent:#10B981;--accent2:#34D399;
+  --text:#ECFDF5;--muted:#4B7A66;
+  --border:rgba(16,185,129,.12);--glow:rgba(16,185,129,.05);
+}
+html,body{height:100%;background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;overflow:hidden}
+body::before{content:'';position:fixed;inset:0;z-index:0;background:radial-gradient(ellipse at 60% 0%,rgba(16,185,129,.06) 0%,transparent 60%);pointer-events:none}
+.layout{display:flex;height:100vh;position:relative;z-index:1}
+.sidebar{width:255px;flex-shrink:0;background:var(--surface);border-right:1px solid var(--border);display:flex;flex-direction:column;overflow-y:auto}
+.sidebar-logo{padding:22px 18px 18px;border-bottom:1px solid var(--border)}
+.logo-badge{display:inline-flex;align-items:center;gap:7px;background:var(--glow);border:1px solid var(--border);border-radius:7px;padding:5px 10px;margin-bottom:10px}
+.logo-dot{width:7px;height:7px;background:var(--accent);border-radius:50%;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(16,185,129,.4)}50%{opacity:.7;box-shadow:0 0 0 5px rgba(16,185,129,0)}}
+.logo-text{font-size:10px;font-weight:500;color:var(--accent);letter-spacing:.08em;text-transform:uppercase}
+.portal-title{font-family:'Syne',sans-serif;font-size:15px;font-weight:700;color:var(--text);line-height:1.3;letter-spacing:-.02em}
+.portal-sub{font-size:11px;color:var(--muted);margin-top:3px}
+.nav-section{padding:14px 18px 6px;font-size:10px;font-weight:500;color:var(--muted);letter-spacing:.1em;text-transform:uppercase}
+.nav-item{display:flex;align-items:center;gap:9px;padding:8px 18px;font-size:13px;color:var(--muted);cursor:pointer;border-left:2px solid transparent;transition:all .18s;user-select:none}
+.nav-item:hover{color:var(--text);background:var(--glow)}
+.nav-item.active{color:var(--accent2);border-left-color:var(--accent);background:var(--glow)}
+.nav-dot{width:5px;height:5px;border-radius:50%;background:currentColor;flex-shrink:0}
+.nav-sub{font-size:11px;padding-left:22px;color:var(--muted);opacity:.7}
+.sidebar-footer{margin-top:auto;padding:14px 18px;border-top:1px solid var(--border);font-size:11px;color:var(--muted);line-height:1.6}
+.conf-badge{display:inline-block;background:rgba(16,185,129,.1);color:var(--accent2);border:1px solid rgba(16,185,129,.2);border-radius:4px;padding:2px 7px;font-size:10px;font-weight:500;letter-spacing:.05em;margin-bottom:7px}
+.main{flex:1;display:flex;flex-direction:column;overflow:hidden}
+.topbar{height:52px;flex-shrink:0;background:var(--surface);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 22px}
+.breadcrumb{display:flex;align-items:center;gap:7px;font-size:12px;color:var(--muted)}
+.breadcrumb strong{color:var(--text);font-weight:500}
+.btn-ghost{display:flex;align-items:center;gap:5px;background:transparent;border:1px solid var(--border);color:var(--muted);padding:5px 12px;border-radius:6px;font-family:'Inter',sans-serif;font-size:12px;cursor:pointer;transition:all .18s;text-decoration:none}
+.btn-ghost:hover{color:var(--text);border-color:var(--accent);background:var(--glow)}
+.page-header{padding:18px 26px 0;border-bottom:1px solid var(--border);background:var(--surface2);flex-shrink:0}
+.page-tag{display:inline-flex;align-items:center;gap:5px;font-size:10px;font-weight:500;color:var(--accent);letter-spacing:.1em;text-transform:uppercase;margin-bottom:6px}
+.page-tag::before{content:'';width:14px;height:1px;background:var(--accent)}
+.page-title{font-family:'Syne',sans-serif;font-size:20px;font-weight:700;color:var(--text);margin-bottom:3px;letter-spacing:-.02em}
+.page-desc{font-size:12px;color:var(--muted);padding-bottom:14px;max-width:580px;line-height:1.5}
+.journey-bar{display:flex;align-items:center;padding:9px 18px;background:var(--surface);border-bottom:1px solid var(--border);gap:3px;flex-shrink:0;overflow-x:auto}
+.jstep{padding:3px 10px;border-radius:100px;font-size:11px;font-weight:500;border:1px solid var(--border);color:var(--muted);white-space:nowrap}
+.jstep.active{background:rgba(16,185,129,.12);border-color:var(--accent);color:var(--accent2)}
+.jarrow{color:var(--muted);font-size:11px;margin:0 1px;opacity:.5}
+.kpi-strip{display:flex;gap:1px;background:var(--border);border-bottom:1px solid var(--border);flex-shrink:0}
+.kpi-item{flex:1;background:var(--surface);padding:10px 18px}
+.kpi-label{font-size:9px;color:var(--muted);letter-spacing:.06em;text-transform:uppercase;margin-bottom:3px}
+.kpi-val{font-family:'Syne',sans-serif;font-size:17px;font-weight:700;color:var(--text)}
+.kpi-sub{font-size:10px;color:var(--accent2);margin-top:1px}
+.iframe-wrap{flex:1;position:relative;overflow:hidden;background:var(--bg)}
+.iframe-wrap iframe{width:100%;height:100%;border:none;display:block}
+.loader{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;background:var(--bg);transition:opacity .4s;z-index:2}
+.loader.hidden{opacity:0;pointer-events:none}
+.spinner{width:30px;height:30px;border:2px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.loading-text{font-size:12px;color:var(--muted)}
+</style>
+</head>
+<body>
+<div class="layout">
+<aside class="sidebar">
+  <div class="sidebar-logo">
+    <div class="logo-badge"><div class="logo-dot"></div><span class="logo-text">En vivo</span></div>
+    <div class="portal-title">Experiencia del<br/>Colaborador</div>
+    <div class="portal-sub">Reclutamiento · Onboarding · Préstamo</div>
+  </div>
+
+  <div class="nav-section">Resultados</div>
+  <div class="nav-item active" onclick="loadPage(this,'ReportSection','Portada','Resultados Experiencia del Colaborador','Análisis integral de la experiencia en los momentos clave del ciclo de vida del empleado.')">
+    <div class="nav-dot"></div>Portada
+  </div>
+
+  <div class="nav-section">Reclutamiento</div>
+  <div class="nav-item" onclick="loadPage(this,'ReportSectioncc48a010616a03da3d77','Reclutamiento','Reclutamiento y Selección','Satisfacción del candidato con el proceso de selección, tiempos de respuesta y comunicación.')">
+    <div class="nav-dot"></div>Reclutamiento y Selección
+  </div>
+  <div class="nav-item" onclick="loadPage(this,'ReportSectionfcb482dea99d2a70a6e0','Comparativo R&S','Comparativo Reclutamiento','Análisis comparativo de resultados del proceso de reclutamiento y selección.')">
+    <div class="nav-dot"></div>Comparativo R & S
+  </div>
+
+  <div class="nav-section">Onboarding</div>
+  <div class="nav-item" onclick="loadPage(this,'ReportSection7d9cfbfcbd0d8f19a157','Onboarding','Onboarding','Experiencia de incorporación: integración, formación inicial y primeras semanas.')">
+    <div class="nav-dot"></div>Onboarding
+  </div>
+  <div class="nav-item" onclick="loadPage(this,'ReportSection180ce454f0478ff5334e','Comparativo Onb.','Comparativo Onboarding','Análisis comparativo de la experiencia de onboarding por área y periodo.')">
+    <div class="nav-dot"></div>Comparativo Onboarding
+  </div>
+
+  <div class="nav-section">Préstamo Hipotecario</div>
+  <div class="nav-item" onclick="loadPage(this,'ReportSectionc3f0b0118ec027eb8a77','Préstamo','Préstamo Hipotecario','Satisfacción con el proceso de solicitud y gestión del beneficio de préstamo hipotecario.')">
+    <div class="nav-dot"></div>Préstamo Hipotecario
+  </div>
+  <div class="nav-item" onclick="loadPage(this,'ReportSectionec944bbd400001e36a22','Comparativo Prest.','Comparativo Préstamo','Análisis comparativo de la experiencia con el beneficio de préstamo hipotecario.')">
+    <div class="nav-dot"></div>Comparativo Préstamo
+  </div>
+
+  <div class="nav-section">Descargas</div>
+  <div class="nav-item" onclick="window.open('https://MarioFernandezH.github.io/experiencia-colaborador.pdf')"><div class="nav-dot"></div>Descargar PDF</div>
+
+  <div class="sidebar-footer">
+    <div class="conf-badge">CONFIDENCIAL</div>
+    <div>People Analytics<br/>Mario Fernández Hierro<br/>Demo Capital Humano</div>
+  </div>
+</aside>
+
+<div class="main">
+  <div class="topbar">
+    <div class="breadcrumb">Capital Humano <span style="opacity:.3;margin:0 2px">·</span> <strong id="bc-title">Experiencia del Colaborador</strong></div>
+    <a href="https://app.powerbi.com/view?r=eyJrIjoiMjU0YmIyMzMtM2VjYS00NzFiLWJiY2YtYmMzMmExNzU0ODY5IiwidCI6Ijc4NWM5NmYxLTZkMmItNGNmZC1hMTQ3LTUzMTU5NWU1Yjg0NiJ9" target="_blank" class="btn-ghost">
+      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+      Abrir en Power BI
+    </a>
+  </div>
+
+  <div class="page-header">
+    <div class="page-tag" id="pg-tag">Portada</div>
+    <div class="page-title" id="pg-title">Resultados Experiencia del Colaborador</div>
+    <div class="page-desc" id="pg-desc">Análisis integral de la experiencia en los momentos clave del ciclo de vida del empleado: reclutamiento, onboarding y préstamo hipotecario.</div>
+  </div>
+
+  <div class="journey-bar">
+    <div class="jstep active">Atracción</div><div class="jarrow">→</div>
+    <div class="jstep active">Reclutamiento</div><div class="jarrow">→</div>
+    <div class="jstep active">Onboarding</div><div class="jarrow">→</div>
+    <div class="jstep active">Préstamos</div><div class="jarrow">→</div>
+    <div class="jstep">Desarrollo</div><div class="jarrow">→</div>
+    <div class="jstep">Retención</div>
+  </div>
+
+  <div class="kpi-strip">
+    <div class="kpi-item"><div class="kpi-label">Momentos medidos</div><div class="kpi-val">3</div><div class="kpi-sub">del ciclo del empleado</div></div>
+    <div class="kpi-item"><div class="kpi-label">Metodología</div><div class="kpi-val">eNPS</div><div class="kpi-sub">+ satisfacción</div></div>
+    <div class="kpi-item"><div class="kpi-label">Área</div><div class="kpi-val">Demo</div><div class="kpi-sub">Capital Humano</div></div>
+    <div class="kpi-item"><div class="kpi-label">Herramienta</div><div class="kpi-val">Power BI</div><div class="kpi-sub">Interactivo</div></div>
+  </div>
+
+  <div class="iframe-wrap">
+    <div class="loader" id="loader"><div class="spinner"></div><div class="loading-text">Cargando reporte…</div></div>
+    <iframe id="pbi-frame"
+      src="https://app.powerbi.com/view?r=eyJrIjoiMjU0YmIyMzMtM2VjYS00NzFiLWJiY2YtYmMzMmExNzU0ODY5IiwidCI6Ijc4NWM5NmYxLTZkMmItNGNmZC1hMTQ3LTUzMTU5NWU1Yjg0NiJ9&pageName=ReportSection"
+      allowfullscreen="true"
+      onload="document.getElementById('loader').classList.add('hidden')">
+    </iframe>
+  </div>
+</div>
+</div>
+
+<script>
+const BASE="https://app.powerbi.com/view?r=eyJrIjoiMjU0YmIyMzMtM2VjYS00NzFiLWJiY2YtYmMzMmExNzU0ODY5IiwidCI6Ijc4NWM5NmYxLTZkMmItNGNmZC1hMTQ3LTUzMTU5NWU1Yjg0NiJ9";
+function loadPage(el,pageId,tag,title,desc){
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('pg-tag').textContent=tag;
+  document.getElementById('pg-title').textContent=title;
+  document.getElementById('pg-desc').textContent=desc;
+  document.getElementById('bc-title').textContent=title;
+  document.getElementById('loader').classList.remove('hidden');
+  document.getElementById('pbi-frame').src=BASE+'&pageName='+pageId;
+}
+</script>
+</body>
+</html>

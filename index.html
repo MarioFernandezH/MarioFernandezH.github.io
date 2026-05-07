@@ -1,0 +1,1005 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mario Fernández · People Analytics Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet" />
+  <style>
+    /* ── TOKENS ────────────────────────────────── */
+    :root {
+      --ink:       #0d0d0d;
+      --paper:     #f5f2ed;
+      --accent:    #e85d26;
+      --accent2:   #2563eb;
+      --muted:     #6b6560;
+      --card-bg:   #ffffff;
+      --border:    rgba(13,13,13,.08);
+      --shadow:    0 2px 24px rgba(13,13,13,.07);
+      --radius:    14px;
+      --font-head: 'Syne', sans-serif;
+      --font-body: 'DM Sans', sans-serif;
+    }
+
+    /* ── RESET ─────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-body);
+      background: var(--paper);
+      color: var(--ink);
+      overflow-x: hidden;
+    }
+    a { color: inherit; text-decoration: none; }
+    img { display: block; max-width: 100%; }
+
+    /* ── NOISE LAYER ────────────────────────────── */
+    body::before {
+      content: '';
+      position: fixed; inset: 0; z-index: 0; pointer-events: none;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      opacity: .5;
+    }
+
+    /* ── NAV ───────────────────────────────────── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.1rem 3rem;
+      background: rgba(245,242,237,.88);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      font-family: var(--font-head);
+      font-weight: 800; font-size: 1.05rem;
+      letter-spacing: -.02em;
+    }
+    .nav-logo span { color: var(--accent); }
+    .nav-links { display: flex; gap: 2rem; }
+    .nav-links a {
+      font-size: .82rem; font-weight: 500; letter-spacing: .06em;
+      text-transform: uppercase; color: var(--muted);
+      transition: color .2s;
+    }
+    .nav-links a:hover { color: var(--ink); }
+    .nav-cta {
+      background: var(--ink); color: var(--paper) !important;
+      padding: .45rem 1.1rem; border-radius: 100px;
+      font-size: .8rem !important; letter-spacing: .05em !important;
+      transition: background .2s !important;
+    }
+    .nav-cta:hover { background: var(--accent) !important; color: #fff !important; }
+
+    /* ── HERO ──────────────────────────────────── */
+    #hero {
+      min-height: 100vh;
+      display: grid; grid-template-columns: 1fr 1fr;
+      align-items: center;
+      padding: 7rem 3rem 4rem;
+      gap: 4rem;
+      position: relative;
+    }
+    .hero-tag {
+      display: inline-flex; align-items: center; gap: .5rem;
+      background: rgba(232,93,38,.1); color: var(--accent);
+      font-size: .75rem; font-weight: 600; letter-spacing: .1em;
+      text-transform: uppercase; padding: .35rem .85rem;
+      border-radius: 100px; margin-bottom: 1.4rem;
+      border: 1px solid rgba(232,93,38,.25);
+    }
+    .hero-tag::before {
+      content: ''; width: 6px; height: 6px;
+      background: var(--accent); border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%,100% { opacity: 1; transform: scale(1); }
+      50% { opacity: .4; transform: scale(1.4); }
+    }
+    h1 {
+      font-family: var(--font-head);
+      font-size: clamp(2.8rem, 5vw, 4.2rem);
+      font-weight: 800; line-height: 1.05;
+      letter-spacing: -.03em;
+    }
+    h1 .line-accent { color: var(--accent); }
+    .hero-sub {
+      margin-top: 1.4rem;
+      font-size: 1.05rem; font-weight: 300; color: var(--muted);
+      line-height: 1.7; max-width: 460px;
+    }
+    .hero-actions {
+      display: flex; gap: 1rem; margin-top: 2.4rem; flex-wrap: wrap;
+    }
+    .btn-primary {
+      background: var(--ink); color: var(--paper);
+      padding: .8rem 1.8rem; border-radius: 100px;
+      font-weight: 500; font-size: .9rem;
+      transition: background .2s, transform .15s;
+    }
+    .btn-primary:hover { background: var(--accent); transform: translateY(-1px); }
+    .btn-outline {
+      border: 1.5px solid var(--ink); color: var(--ink);
+      padding: .8rem 1.8rem; border-radius: 100px;
+      font-weight: 500; font-size: .9rem;
+      transition: border-color .2s, color .2s, transform .15s;
+    }
+    .btn-outline:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-1px); }
+
+    /* Stat pills */
+    .hero-stats {
+      display: flex; gap: 1rem; margin-top: 2.8rem; flex-wrap: wrap;
+    }
+    .stat-pill {
+      background: var(--card-bg); border: 1px solid var(--border);
+      border-radius: 100px; padding: .55rem 1.1rem;
+      display: flex; align-items: center; gap: .6rem;
+      box-shadow: var(--shadow);
+    }
+    .stat-pill strong {
+      font-family: var(--font-head); font-size: 1rem; font-weight: 700;
+    }
+    .stat-pill span { font-size: .78rem; color: var(--muted); }
+
+    /* Hero visual side */
+    .hero-visual {
+      display: flex; flex-direction: column; gap: 1rem;
+      position: relative;
+    }
+    .hero-photo-wrap {
+      position: relative;
+      width: 200px; height: 200px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 4px solid var(--card-bg);
+      box-shadow: 0 8px 40px rgba(13,13,13,.15);
+      margin: 0 auto 1rem;
+    }
+    .hero-photo-wrap img {
+      width: 100%; height: 100%; object-fit: cover;
+    }
+    /* Decorative rings */
+    .hero-photo-wrap::after {
+      content: '';
+      position: absolute; inset: -12px;
+      border: 2px dashed rgba(232,93,38,.3);
+      border-radius: 50%;
+      animation: spin 20s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .hero-card-float {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1rem 1.2rem;
+      box-shadow: var(--shadow);
+      display: flex; align-items: center; gap: .8rem;
+      font-size: .82rem;
+      animation: float 4s ease-in-out infinite;
+    }
+    .hero-card-float:nth-child(3) { animation-delay: -2s; }
+    @keyframes float {
+      0%,100% { transform: translateY(0); }
+      50% { transform: translateY(-6px); }
+    }
+    .hcf-icon {
+      width: 36px; height: 36px; border-radius: 8px;
+      display: grid; place-items: center; font-size: 1.1rem;
+      flex-shrink: 0;
+    }
+    .hcf-icon.orange { background: rgba(232,93,38,.12); }
+    .hcf-icon.blue   { background: rgba(37,99,235,.12); }
+    .hcf-title { font-weight: 500; }
+    .hcf-sub   { color: var(--muted); font-size: .74rem; margin-top: .1rem; }
+
+    /* ── SECTION SHARED ────────────────────────── */
+    section { padding: 6rem 3rem; position: relative; }
+    .section-label {
+      font-size: .72rem; font-weight: 600; letter-spacing: .15em;
+      text-transform: uppercase; color: var(--accent);
+      margin-bottom: .7rem;
+    }
+    h2 {
+      font-family: var(--font-head);
+      font-size: clamp(1.8rem, 3vw, 2.6rem);
+      font-weight: 700; letter-spacing: -.025em;
+      line-height: 1.15;
+    }
+    .section-intro {
+      color: var(--muted); font-size: 1rem; line-height: 1.7;
+      max-width: 560px; margin-top: .8rem;
+    }
+
+    /* ── ABOUT ─────────────────────────────────── */
+    #about { background: var(--ink); color: var(--paper); }
+    #about .section-label { color: var(--accent); }
+    #about .section-intro { color: rgba(245,242,237,.6); }
+    .about-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 4rem; margin-top: 3.5rem; align-items: start;
+    }
+    .about-body { font-size: .97rem; line-height: 1.8; color: rgba(245,242,237,.85); }
+    .about-body p + p { margin-top: 1rem; }
+    .skills-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: .6rem;
+    }
+    .skill-chip {
+      background: rgba(245,242,237,.06);
+      border: 1px solid rgba(245,242,237,.1);
+      border-radius: 8px; padding: .6rem .9rem;
+      font-size: .82rem; font-weight: 400;
+      display: flex; align-items: center; gap: .5rem;
+      transition: background .2s;
+    }
+    .skill-chip:hover { background: rgba(232,93,38,.15); border-color: rgba(232,93,38,.3); }
+    .skill-dot { width: 6px; height: 6px; background: var(--accent); border-radius: 50%; flex-shrink: 0; }
+
+    /* ── PORTFOLIO ─────────────────────────────── */
+    #portfolio { background: var(--paper); }
+    .filter-bar {
+      display: flex; gap: .5rem; flex-wrap: wrap; margin-top: 2rem;
+    }
+    .filter-btn {
+      background: transparent;
+      border: 1.5px solid var(--border);
+      border-radius: 100px; padding: .4rem 1rem;
+      font-family: var(--font-body); font-size: .8rem; font-weight: 500;
+      cursor: pointer; color: var(--muted);
+      transition: all .2s;
+    }
+    .filter-btn.active, .filter-btn:hover {
+      background: var(--ink); border-color: var(--ink); color: var(--paper);
+    }
+    .projects-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem; margin-top: 2.5rem;
+    }
+    .project-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      transition: transform .25s, box-shadow .25s;
+      cursor: default;
+    }
+    .project-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(13,13,13,.12);
+    }
+    .project-thumb {
+      height: 200px; overflow: hidden; position: relative;
+      background: #e8e4de;
+    }
+    .project-thumb img {
+      width: 100%; height: 100%; object-fit: cover;
+      transition: transform .4s;
+    }
+    .project-card:hover .project-thumb img { transform: scale(1.04); }
+
+    /* Placeholder visual when no image */
+    .thumb-placeholder {
+      width: 100%; height: 100%;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      gap: .6rem;
+    }
+    .thumb-placeholder .ph-icon { font-size: 2.4rem; }
+    .thumb-placeholder .ph-label {
+      font-size: .72rem; font-weight: 600; letter-spacing: .12em;
+      text-transform: uppercase; opacity: .5;
+    }
+
+    .project-badge {
+      position: absolute; top: .8rem; left: .8rem;
+      background: rgba(13,13,13,.75); color: #fff;
+      font-size: .68rem; font-weight: 600; letter-spacing: .08em;
+      text-transform: uppercase; padding: .25rem .65rem;
+      border-radius: 100px; backdrop-filter: blur(6px);
+    }
+    .project-badge.orange { background: rgba(232,93,38,.85); }
+    .project-badge.blue   { background: rgba(37,99,235,.85); }
+    .project-badge.green  { background: rgba(22,163,74,.85); }
+    .project-badge.purple { background: rgba(124,58,237,.85); }
+
+    .project-body { padding: 1.2rem 1.4rem 1.4rem; }
+    .project-title {
+      font-family: var(--font-head);
+      font-size: 1rem; font-weight: 700; letter-spacing: -.01em;
+      margin-bottom: .4rem;
+    }
+    .project-desc {
+      font-size: .82rem; color: var(--muted); line-height: 1.6;
+    }
+    .project-tags {
+      display: flex; gap: .4rem; flex-wrap: wrap; margin-top: .9rem;
+    }
+    .tag {
+      font-size: .7rem; padding: .2rem .55rem;
+      border-radius: 4px; font-weight: 500;
+      background: rgba(13,13,13,.06);
+    }
+    .project-links {
+      display: flex; gap: .6rem; margin-top: 1rem;
+    }
+    .link-chip {
+      display: inline-flex; align-items: center; gap: .35rem;
+      font-size: .75rem; font-weight: 500; padding: .35rem .8rem;
+      border-radius: 100px; border: 1.5px solid var(--border);
+      transition: all .2s;
+    }
+    .link-chip:hover { border-color: var(--accent); color: var(--accent); }
+    .link-chip svg { width: 13px; height: 13px; }
+    .link-chip.disabled { opacity: .35; cursor: not-allowed; pointer-events: none; }
+
+    /* Featured card (wide) */
+    .project-card.featured {
+      grid-column: span 2;
+    }
+    .project-card.featured .project-thumb { height: 240px; }
+
+    /* ── EXPERIENCE TIMELINE ───────────────────── */
+    #experience { background: #faf8f5; }
+    .timeline { margin-top: 3rem; position: relative; }
+    .timeline::before {
+      content: '';
+      position: absolute; left: 12px; top: 6px; bottom: 0;
+      width: 1.5px; background: var(--border);
+    }
+    .tl-item {
+      display: grid; grid-template-columns: 26px 1fr;
+      gap: 1.2rem; margin-bottom: 2.8rem;
+    }
+    .tl-dot {
+      width: 26px; height: 26px; border-radius: 50%;
+      background: var(--card-bg); border: 2px solid var(--ink);
+      display: grid; place-items: center; flex-shrink: 0; z-index: 1;
+    }
+    .tl-dot span { width: 8px; height: 8px; background: var(--accent); border-radius: 50%; }
+    .tl-content { padding-top: .1rem; }
+    .tl-date {
+      font-size: .72rem; font-weight: 600; letter-spacing: .08em;
+      text-transform: uppercase; color: var(--muted); margin-bottom: .3rem;
+    }
+    .tl-role {
+      font-family: var(--font-head); font-weight: 700; font-size: 1.05rem;
+      letter-spacing: -.01em;
+    }
+    .tl-company {
+      font-size: .85rem; color: var(--accent); font-weight: 500; margin-top: .1rem;
+    }
+    .tl-desc {
+      font-size: .85rem; color: var(--muted); line-height: 1.7; margin-top: .6rem;
+    }
+    .tl-kpis {
+      display: flex; gap: .5rem; flex-wrap: wrap; margin-top: .8rem;
+    }
+    .kpi-badge {
+      background: rgba(232,93,38,.08); color: var(--accent);
+      border: 1px solid rgba(232,93,38,.2);
+      font-size: .72rem; font-weight: 600; padding: .25rem .65rem;
+      border-radius: 6px; letter-spacing: .02em;
+    }
+
+    /* ── TOOLS ─────────────────────────────────── */
+    #tools { background: var(--paper); }
+    .tools-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      gap: 1rem; margin-top: 3rem;
+    }
+    .tool-card {
+      background: var(--card-bg); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 1.4rem 1.2rem;
+      text-align: center; transition: all .2s;
+      box-shadow: var(--shadow);
+    }
+    .tool-card:hover { transform: translateY(-3px); box-shadow: 0 8px 30px rgba(13,13,13,.1); }
+    .tool-icon { font-size: 2rem; margin-bottom: .7rem; }
+    .tool-name {
+      font-family: var(--font-head); font-weight: 700; font-size: .9rem;
+    }
+    .tool-level {
+      font-size: .72rem; color: var(--muted); margin-top: .25rem;
+    }
+    .tool-bar {
+      height: 3px; background: var(--border); border-radius: 100px;
+      margin-top: .8rem; overflow: hidden;
+    }
+    .tool-bar-fill {
+      height: 100%; background: var(--accent); border-radius: 100px;
+      transition: width .6s ease;
+    }
+
+    /* ── CONTACT ───────────────────────────────── */
+    #contact {
+      background: var(--ink); color: var(--paper);
+      text-align: center;
+    }
+    #contact h2 { color: var(--paper); }
+    #contact .section-label { color: var(--accent); }
+    .contact-sub {
+      color: rgba(245,242,237,.6); font-size: 1rem; line-height: 1.7;
+      max-width: 480px; margin: .8rem auto 2.5rem;
+    }
+    .contact-links {
+      display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;
+    }
+    .contact-link {
+      display: inline-flex; align-items: center; gap: .6rem;
+      background: rgba(245,242,237,.07); border: 1px solid rgba(245,242,237,.15);
+      color: var(--paper); padding: .75rem 1.4rem; border-radius: 100px;
+      font-size: .85rem; font-weight: 500;
+      transition: all .2s;
+    }
+    .contact-link:hover {
+      background: var(--accent); border-color: var(--accent);
+    }
+
+    /* ── FOOTER ────────────────────────────────── */
+    footer {
+      background: #080808; color: rgba(245,242,237,.4);
+      text-align: center; padding: 1.5rem 3rem;
+      font-size: .75rem;
+    }
+
+    /* ── ANIMATIONS ────────────────────────────── */
+    .fade-up {
+      opacity: 0; transform: translateY(28px);
+      transition: opacity .6s ease, transform .6s ease;
+    }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+    /* ── RESPONSIVE ────────────────────────────── */
+    @media (max-width: 900px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { display: none; }
+      #hero { grid-template-columns: 1fr; padding: 6rem 1.5rem 3rem; gap: 2.5rem; }
+      .hero-visual { order: -1; }
+      section { padding: 4rem 1.5rem; }
+      .about-grid { grid-template-columns: 1fr; gap: 2rem; }
+      .projects-grid { grid-template-columns: 1fr; }
+      .project-card.featured { grid-column: span 1; }
+      .tools-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── NAV ─────────────────────────────────────── -->
+<nav>
+  <div class="nav-logo">MARIO FERNÁNDEZ<span>.</span></div>
+  <div class="nav-links">
+    <a href="#portfolio">Proyectos</a>
+    <a href="#experience">Experiencia</a>
+    <a href="#tools">Herramientas</a>
+    <a href="#contact" class="nav-cta">Contacto</a>
+  </div>
+</nav>
+
+<!-- ── HERO ────────────────────────────────────── -->
+<section id="hero">
+  <div class="hero-text">
+    <div class="hero-tag">Disponible para nuevas oportunidades</div>
+    <h1>
+      People<br/>
+      <span class="line-accent">Analytics</span><br/>
+      & HR Data
+    </h1>
+    <p class="hero-sub">
+      Más de 6 años convirtiendo datos de RR.HH. en decisiones estratégicas.
+      Dashboards ejecutivos, KPIs de clima y experiencia del empleado con
+      Excel avanzado, Power BI y Looker Studio.
+    </p>
+    <div class="hero-actions">
+      <a href="#portfolio" class="btn-primary">Ver proyectos →</a>
+      <a href="CV_Mario_Fernandez.pdf" class="btn-outline" target="_blank">Descargar CV</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-pill">
+        <strong>6+</strong><span>años de experiencia</span>
+      </div>
+      <div class="stat-pill">
+        <strong>14K</strong><span>empleados gestionados</span>
+      </div>
+      <div class="stat-pill">
+        <strong>10+</strong><span>KPIs diseñados</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-visual">
+    <div class="hero-photo-wrap">
+      <!-- Replace with actual photo path -->
+      <img src="foto_mario.jpeg" alt="Mario Fernández Hierro" onerror="this.style.background='#d4cfc8';this.alt='MFH'" />
+    </div>
+    <div class="hero-card-float">
+      <div class="hcf-icon orange">📊</div>
+      <div>
+        <div class="hcf-title">Power BI · Looker Studio</div>
+        <div class="hcf-sub">Dashboards ejecutivos interactivos</div>
+      </div>
+    </div>
+    <div class="hero-card-float">
+      <div class="hcf-icon blue">🎯</div>
+      <div>
+        <div class="hcf-title">Clima & Cultura OCAI</div>
+        <div class="hcf-sub">Diagnósticos organizacionales</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── ABOUT ────────────────────────────────────── -->
+<section id="about">
+  <p class="section-label fade-up">Sobre mí</p>
+  <h2 class="fade-up">Datos que cuentan<br/>historias que importan</h2>
+  <div class="about-grid">
+    <div class="about-body fade-up">
+      <p>
+        Soy Mario Fernández, profesional especializado en <strong>People Analytics</strong>
+        con más de 6 años de experiencia en el Banco de Reservas, donde diseñé y mantuve
+        el sistema de indicadores de clima laboral para una plantilla de 14,000 empleados.
+      </p>
+      <p>
+        Mi trabajo vive en la intersección entre los datos y las personas: transformo encuestas,
+        métricas de rotación, absentismo y satisfacción en dashboards ejecutivos que permiten
+        a la dirección tomar decisiones con confianza.
+      </p>
+      <p>
+        Actualmente cursando una Maestría en Data Science (SBS) y en proceso de
+        certificación en Sistemas de Gestión de Información, con base en Madrid
+        y disponible para proyectos presenciales o remotos.
+      </p>
+    </div>
+    <div class="fade-up">
+      <div class="skills-grid">
+        <div class="skill-chip"><span class="skill-dot"></span>Power BI Avanzado</div>
+        <div class="skill-chip"><span class="skill-dot"></span>Looker Studio</div>
+        <div class="skill-chip"><span class="skill-dot"></span>Excel Avanzado</div>
+        <div class="skill-chip"><span class="skill-dot"></span>Encuestas de Clima</div>
+        <div class="skill-chip"><span class="skill-dot"></span>KPIs de RR.HH.</div>
+        <div class="skill-chip"><span class="skill-dot"></span>People Analytics</div>
+        <div class="skill-chip"><span class="skill-dot"></span>SQL</div>
+        <div class="skill-chip"><span class="skill-dot"></span>Python (Data)</div>
+        <div class="skill-chip"><span class="skill-dot"></span>OCAI / eNPS</div>
+        <div class="skill-chip"><span class="skill-dot"></span>Storytelling con datos</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── PORTFOLIO ────────────────────────────────── -->
+<section id="portfolio">
+  <p class="section-label fade-up">Portafolio</p>
+  <h2 class="fade-up">Proyectos seleccionados</h2>
+  <p class="section-intro fade-up">
+    Casos reales anonimizados. Los nombres de empresas y datos sensibles
+    han sido reemplazados para proteger la confidencialidad.
+  </p>
+
+  <div class="filter-bar fade-up">
+    <button class="filter-btn active" data-filter="all">Todos</button>
+    <button class="filter-btn" data-filter="powerbi">Power BI</button>
+    <button class="filter-btn" data-filter="looker">Looker Studio</button>
+    <button class="filter-btn" data-filter="survey">Encuestas</button>
+    <button class="filter-btn" data-filter="cultura">Clima & Cultura</button>
+  </div>
+
+  <div class="projects-grid">
+
+    <!-- PROJECT 1 – Dashboard Power BI Clima (FEATURED) -->
+    <div class="project-card fade-up" data-cat="powerbi cultura">
+      <div class="project-thumb">
+        <img src="assets/thumb-clima-pbi.png" alt="Dashboard Clima Power BI"
+             onerror="this.parentElement.innerHTML='<div class=\'thumb-placeholder\' style=\'background:linear-gradient(135deg,#1e3a5f 0%,#2563eb 100%);color:#fff\'><div class=\'ph-icon\'>📊</div><div class=\'ph-label\'>Power BI · Clima Laboral</div></div>'" />
+        <span class="project-badge blue">Power BI</span>
+      </div>
+      <div class="project-body">
+        <div class="project-title">Dashboard Ejecutivo de Clima Laboral</div>
+        <p class="project-desc">
+          Cuadro de mando integral para el seguimiento de indicadores de clima y
+          satisfacción de empleados. Incluye segmentación por región y nivel jerárquico. 
+		  Diseñado para presentaciones a la dirección ejecutiva.
+        </p>
+        <div class="project-tags">
+          <span class="tag">Power BI</span>
+          <span class="tag">DAX</span>
+          <span class="tag">Clima Laboral</span>
+          <span class="tag">KPIs</span>
+          <span class="tag">Storytelling</span>
+        </div>
+        <div class="project-links">
+          <a href="https://clima-demo-portafolio.netlify.app/" class="link-chip" target="_blank">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+            Ver visualización
+          </a>
+          <span class="link-chip disabled">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+            Demo restringida
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- PROJECT 2 – OCAI Cultura -->
+    <div class="project-card fade-up" data-cat="powerbi cultura">
+      <div class="project-thumb">
+        <img src="assets/thumb-ocai.png" alt="Portal OCAI"
+             onerror="this.parentElement.innerHTML='<div class=\'thumb-placeholder\' style=\'background:linear-gradient(135deg,#1a1a2e 0%,#e85d26 100%);color:#fff\'><div class=\'ph-icon\'>🏛️</div><div class=\'ph-label\'>Diagnóstico OCAI</div></div>'" />
+        <span class="project-badge orange">Netlify · Portal</span>
+      </div>
+      <div class="project-body">
+        <div class="project-title">Diagnóstico OCAI</div>
+        <p class="project-desc">
+          Cuadro de diagnóstico de cultura organizacional basado en el modelo 
+		  OCAI (Cameron & Quinn). Incluye visualización de resultados por dimensión
+          y generación de informe de Cultura en tiempo real.
+        </p>
+        <div class="project-tags">
+          <span class="tag">Power BI</span>
+          <span class="tag">OCAI</span>
+          <span class="tag">Cultura Org.</span>
+          <span class="tag">Dashboard</span>
+        </div>
+        <div class="project-links">
+          <a href="https://ocai-demo-portafolio.netlify.app/" class="link-chip" target="_blank">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+            Ver visualización
+          </a>
+          <span class="link-chip disabled">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+            Demo restringida
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- PROJECT 3 – Looker Studio -->
+    <div class="project-card fade-up" data-cat="looker">
+      <div class="project-thumb">
+        <img src="assets/thumb-looker.png" alt="Dashboard Looker Studio"
+             onerror="this.parentElement.innerHTML='<div class=\'thumb-placeholder\' style=\'background:linear-gradient(135deg,#0f4c81 0%,#34a853 100%);color:#fff\'><div class=\'ph-icon\'>📈</div><div class=\'ph-label\'>Looker Studio</div></div>'" />
+        <span class="project-badge green">Looker Studio</span>
+      </div>
+      <div class="project-body">
+        <div class="project-title">Reporte de KPIs RR.HH. en Looker</div>
+        <p class="project-desc">
+          Dashboard de indicadores mensuales de RRHH: rotación, absentismo, headcount
+          y satisfacción. Conectado a Google Sheets como fuente de datos para actualización automática.
+        </p>
+        <div class="project-tags">
+          <span class="tag">Looker Studio</span>
+          <span class="tag">Google Sheets</span>
+          <span class="tag">Rotación</span>
+          <span class="tag">Absentismo</span>
+        </div>
+        <div class="project-links">
+          <a href="https://datastudio.google.com/reporting/41acbf32-1464-4302-8251-82951db6797c" class="link-chip" target="_blank">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            Ver visualización
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- PROJECT 4 – Encuesta Experiencia -->
+    <div class="project-card fade-up" data-cat="powerbi cultura">
+      <div class="project-thumb">
+        <img src="assets/thumb-msforms.png" alt="Encuesta MS Forms"
+             onerror="this.parentElement.innerHTML='<div class=\'thumb-placeholder\' style=\'background:linear-gradient(135deg,#742774 0%,#ae0dc1 100%);color:#fff\'><div class=\'ph-icon\'>📣</div><div class=\'ph-label\'>Evaluación Experiencia</div></div>'" />
+        <span class="project-badge purple">Evaluación Experiencia</span>
+      </div>
+      <div class="project-body">
+        <div class="project-title">Encuesta Experiencia del Colaborador</div>
+        <p class="project-desc">
+          Diseño y despliegue de encuesta de Experiencia del Empleado (onboarding, clima y
+          préstamo hipotecario). Integrada con Power BI para análisis de resultados en tiempo real.
+        </p>
+        <div class="project-tags">
+          <span class="tag">Power BI</span>
+          <span class="tag">Onboarding</span>
+          <span class="tag">eNPS</span>
+          <span class="tag">Employee XP</span>
+        </div>
+        <div class="project-links">
+          <a href="https://experiencia-demo-portafolio.netlify.app/" class="link-chip" target="_blank">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+            Ver visualización
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- PROJECT 5 – Airbnb Evaluación (tu tercer trabajo del portafolio) -->
+    <div class="project-card fade-up" data-cat="looker powerbi">
+      <div class="project-thumb">
+        <img src="assets/thumb-airbnb.png" alt="Evaluación Mercado Airbnb"
+             onerror="this.parentElement.innerHTML='<div class=\'thumb-placeholder\' style=\'background:linear-gradient(135deg,#ff5a5f 0%,#ff385c 100%);color:#fff\'><div class=\'ph-icon\'>🏙️</div><div class=\'ph-label\'>Análisis de Mercado</div></div>'" />
+        <span class="project-badge" style="background:rgba(255,56,92,.85)">Análisis</span>
+      </div>
+      <div class="project-body">
+        <div class="project-title">Evaluación Mercado Airbnb · Madrid</div>
+        <p class="project-desc">
+          Análisis de mercado de alojamientos en Madrid: precios por zona, ocupación,
+          tipo de anfitrión y tendencias. Dashboard con métricas clave y mapa de calor por distrito.
+        </p>
+        <div class="project-tags">
+          <span class="tag">Análisis</span>
+          <span class="tag">Mercado</span>
+          <span class="tag">Madrid</span>
+          <span class="tag">Visualización</span>
+        </div>
+        <div class="project-links">
+          <a href="https://datastudio.google.com/reporting/85e6b35b-c9e9-4da2-90d9-e9c3117e3a19" class="link-chip" target="_blank">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            Ver visualización y análisis
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- PROJECT 6 – Encuestas -->
+    <div class="project-card fade-up" data-cat="survey">
+      <div class="project-thumb">
+        <img src="assets/thumb-gforms.png" alt="Encuesta Google Forms"
+             onerror="this.parentElement.innerHTML='<div class=\'thumb-placeholder\' style=\'background:linear-gradient(135deg,#1565c0 0%,#ea4335 100%);color:#fff\'><div class=\'ph-icon\'>📋</div><div class=\'ph-label\'>Forms y Netlify</div></div>'" />
+        <span class="project-badge blue">Encuestas</span>
+      </div>
+      <div class="project-body">
+        <div class="project-title">Encuestas en General</div>
+        <p class="project-desc">
+          Formularios de encuestas laborales con distintos formatos y preguntas, lógica condicional avanzada
+          y análisis automático de resultados conectado a Power BI y Looker Studio.
+        </p>
+        <div class="project-tags">
+          <span class="tag">Microsoft Forms</span>
+		  <span class="tag">Netlify</span>
+          <span class="tag">Looker Studio</span>
+          <span class="tag">Satisfacción</span>
+        </div>
+		<div class="project-links">
+          <a href="https://forms.office.com/r/5JLCsbAsHr" class="link-chip" target="_blank">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            Encuesta Clima
+          </a>
+          <a href="https://forms.office.com/r/B6cp2h7Twm" class="link-chip" target="_blank">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            Encuesta Préstamo
+          </a>
+          <a href="https://talento-ocai.netlify.app/" class="link-chip" target="_blank">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+            Portal OCAI
+          </a>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /projects-grid -->
+</section>
+
+<!-- ── EXPERIENCE ───────────────────────────────── -->
+<section id="experience">
+  <p class="section-label fade-up">Trayectoria</p>
+  <h2 class="fade-up">Experiencia profesional</h2>
+  <div class="timeline">
+
+    <div class="tl-item fade-up">
+      <div class="tl-dot"><span></span></div>
+      <div class="tl-content">
+        <div class="tl-date">May 2022 — Ene 2026</div>
+        <div class="tl-role">Responsable de Clima Laboral, Experiencia del Empleado y People Analytics</div>
+        <div class="tl-company">Banco de Reservas</div>
+        <p class="tl-desc">
+          Diseño y seguimiento de +10 KPIs para una plantilla de 14,000 empleados mediante
+          Excel y Power BI para la toma de decisiones estratégicas. Elaboración de informes
+          ejecutivos y dashboards para la dirección. Gestión de grandes volúmenes de datos
+          para detectar oportunidades de mejora.
+        </p>
+        <div class="tl-kpis">
+          <span class="kpi-badge">+14,000 empleados</span>
+          <span class="kpi-badge">+10 KPIs</span>
+          <span class="kpi-badge">Power BI</span>
+          <span class="kpi-badge">Informes ejecutivos</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-item fade-up">
+      <div class="tl-dot"><span></span></div>
+      <div class="tl-content">
+        <div class="tl-date">Ene 2020 — May 2022</div>
+        <div class="tl-role">Analista Clima Laboral y HR Data Analyst</div>
+        <div class="tl-company">Banco de Reservas</div>
+        <p class="tl-desc">
+          Análisis descriptivo de datos para identificación de tendencias en más de 8
+          indicadores mensuales de RR.HH. Apoyo en la elaboración de informes y seguimiento
+          de KPIs. Gestión y limpieza de bases de datos.
+        </p>
+        <div class="tl-kpis">
+          <span class="kpi-badge">8+ indicadores</span>
+          <span class="kpi-badge">Data cleaning</span>
+          <span class="kpi-badge">Análisis descriptivo</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-item fade-up">
+      <div class="tl-dot"><span></span></div>
+      <div class="tl-content">
+        <div class="tl-date">Sep 2018 — Ene 2020</div>
+        <div class="tl-role">Técnico Cultura y Clima Organizacional</div>
+        <div class="tl-company">Banco de Reservas</div>
+        <p class="tl-desc">
+          Apoyo en programas de cultura y gestión del cambio, así como gestión operativa.
+          Análisis descriptivo de resultados de encuestas para identificación de tendencias iniciales.
+        </p>
+        <div class="tl-kpis">
+          <span class="kpi-badge">Gestión del cambio</span>
+          <span class="kpi-badge">Encuestas</span>
+          <span class="kpi-badge">Cultura Org.</span>
+        </div>
+      </div>
+    </div>
+
+	<div class="tl-item fade-up">
+      <div class="tl-dot"><span></span></div>
+      <div class="tl-content">
+        <div class="tl-date">May 2015 — Sep 2018</div>
+        <div class="tl-role">Auxiliar de Aseguramiento de la Calidad</div>
+        <div class="tl-company">Banco de Reservas</div>
+        <p class="tl-desc">
+          Participación en evaluaciones de calidad del servicio, medición de
+          protocolos de atención, encuestas de satisfacción del cliente interno
+          e implementación de la metodología 5S para la mejora continua.
+        </p>
+        <div class="tl-kpis">
+          <span class="kpi-badge">Calidad de servicio</span>
+          <span class="kpi-badge">Encuestas</span>
+          <span class="kpi-badge">Metodología 5S</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-item fade-up">
+      <div class="tl-dot"><span></span></div>
+      <div class="tl-content">
+        <div class="tl-date">Ago 2014 — May 2015</div>
+        <div class="tl-role">Cajero</div>
+        <div class="tl-company">Banco de Reservas</div>
+        <p class="tl-desc">
+          Atención al cliente en ventanilla y gestión eficiente de operaciones
+          de caja, garantizando el cumplimiento de procedimientos, seguridad
+          operativa y calidad del servicio.
+        </p>
+        <div class="tl-kpis">
+          <span class="kpi-badge">Atención al cliente</span>
+          <span class="kpi-badge">Operaciones</span>
+          <span class="kpi-badge">Calidad</span>
+        </div>
+      </div>
+    </div>
+
+    </div><!-- /timeline -->
+
+</section>
+
+<!-- ── TOOLS ────────────────────────────────────── -->
+<section id="tools">
+  <p class="section-label fade-up">Stack tecnológico</p>
+  <h2 class="fade-up">Herramientas y tecnologías</h2>
+  <div class="tools-grid">
+    <div class="tool-card fade-up">
+      <div class="tool-icon">📊</div>
+      <div class="tool-name">Power BI</div>
+      <div class="tool-level">Avanzado</div>
+      <div class="tool-bar"><div class="tool-bar-fill" style="width:90%"></div></div>
+    </div>
+    <div class="tool-card fade-up">
+      <div class="tool-icon">📗</div>
+      <div class="tool-name">Excel</div>
+      <div class="tool-level">Avanzado · MOS Expert</div>
+      <div class="tool-bar"><div class="tool-bar-fill" style="width:95%"></div></div>
+    </div>
+    <div class="tool-card fade-up">
+      <div class="tool-icon">📈</div>
+      <div class="tool-name">Looker Studio</div>
+      <div class="tool-level">Avanzado</div>
+      <div class="tool-bar"><div class="tool-bar-fill" style="width:82%"></div></div>
+    </div>
+    <div class="tool-card fade-up">
+      <div class="tool-icon">🗄️</div>
+      <div class="tool-name">SQL</div>
+      <div class="tool-level">Intermedio</div>
+      <div class="tool-bar"><div class="tool-bar-fill" style="width:50%"></div></div>
+    </div>
+    <div class="tool-card fade-up">
+      <div class="tool-icon">🐍</div>
+      <div class="tool-name">Python</div>
+      <div class="tool-level">Básico — Data Analysis</div>
+      <div class="tool-bar"><div class="tool-bar-fill" style="width:35%"></div></div>
+    </div>
+    <div class="tool-card fade-up">
+      <div class="tool-icon">📝</div>
+      <div class="tool-name">MS Forms</div>
+      <div class="tool-level">Avanzado</div>
+      <div class="tool-bar"><div class="tool-bar-fill" style="width:85%"></div></div>
+    </div>
+    <div class="tool-card fade-up">
+      <div class="tool-icon">📋</div>
+      <div class="tool-name">Google Forms</div>
+      <div class="tool-level">Avanzado</div>
+      <div class="tool-bar"><div class="tool-bar-fill" style="width:85%"></div></div>
+    </div>
+    <div class="tool-card fade-up">
+      <div class="tool-icon">🔍</div>
+      <div class="tool-name">Eikon</div>
+      <div class="tool-level">Intermedio</div>
+      <div class="tool-bar"><div class="tool-bar-fill" style="width:60%"></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CONTACT ──────────────────────────────────── -->
+<section id="contact">
+  <p class="section-label fade-up">Contacto</p>
+  <h2 class="fade-up">¿Hablamos?</h2>
+  <p class="contact-sub fade-up">
+    Abierto a proyectos de People Analytics, posiciones en RR.HH. Data y
+    colaboraciones en España o en remoto.
+  </p>
+  <div class="contact-links fade-up">
+    <a href="mailto:mario.efernandez@outlook.com" class="contact-link">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+      mario.efernandez@outlook.com
+    </a>
+    <a href="tel:+34614231060" class="contact-link">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.18h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.74a16 16 0 0 0 6.35 6.35l.92-.92a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+      +34 614 231 060
+    </a>
+    <a href="https://www.linkedin.com/in/mario-fern%C3%A1ndez-hierro-487919190/" target="_blank" class="contact-link">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
+      LinkedIn
+    </a>
+    <a href="CV_Mario_Fernandez.pdf" target="_blank" class="contact-link">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+      Descargar CV
+    </a>
+  </div>
+</section>
+
+<!-- ── FOOTER ───────────────────────────────────── -->
+<footer>
+  <p>© 2026 Mario Enrique Fernández Hierro · Madrid, España</p>
+</footer>
+
+<script>
+  /* ── Scroll fade-in ─────────────────────────── */
+  const observer = new IntersectionObserver(
+    (entries) => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }),
+    { threshold: 0.12 }
+  );
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+  /* ── Filter buttons ─────────────────────────── */
+  const filterBtns = document.querySelectorAll('.filter-btn');
+  const cards = document.querySelectorAll('.project-card');
+
+  filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      filterBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const filter = btn.dataset.filter;
+      cards.forEach(card => {
+        const cats = card.dataset.cat || '';
+        const show = filter === 'all' || cats.includes(filter);
+        card.style.display = show ? '' : 'none';
+      });
+    });
+  });
+</script>
+</body>
+</html>
